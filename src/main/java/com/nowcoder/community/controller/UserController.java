@@ -1,5 +1,6 @@
 package com.nowcoder.community.controller;
 
+import com.nowcoder.community.annotation.LoginRequired;
 import com.nowcoder.community.entity.User;
 import com.nowcoder.community.service.UserService;
 import com.nowcoder.community.util.CommunityUtil;
@@ -14,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -23,6 +25,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/user")
@@ -48,12 +51,13 @@ public class UserController {
     @Autowired
     private HostHolder hostHolder;
 
-
+    @LoginRequired
     @RequestMapping(path = "/setting", method = RequestMethod.GET)
     public String getSettingPage() {
         return "/site/setting";
     }
 
+    @LoginRequired
     @RequestMapping(path = "/upload", method = RequestMethod.POST)
     public String uploadHeader(MultipartFile headerImage, Model model) {
         if (headerImage == null) {
@@ -107,6 +111,27 @@ public class UserController {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    // 修改密码
+    @LoginRequired
+    @RequestMapping(path = "/password", method = RequestMethod.POST)
+    public String getHeader(@CookieValue("ticket") String ticket, String password, String newPassword, Model model) {
+        User user = hostHolder.getUser();
+
+        Map<String, Object> map = userService.updatePassword(ticket, user, password, newPassword);
+        if (map == null || map.isEmpty()) {
+            // 修改密码成功
+            model.addAttribute("showReset", true);
+            // 弹出窗口提示：修改密码成功，请重新登录！
+            return "redirect:/login";
+        } else {
+            model.addAttribute("passwordMsg", map.get("passwordMsg"));
+            model.addAttribute("newPasswordMsg", map.get("newPasswordMsg"));
+            return "/site/setting";
+        }
 
     }
+
+
 }

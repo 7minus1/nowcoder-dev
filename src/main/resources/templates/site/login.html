@@ -62,7 +62,11 @@
 		<!-- 内容 -->
 		<div class="main">
 			<div class="container pl-5 pr-5 pt-3 pb-3 mt-3 mb-3">
-				<h3 class="text-center text-info border-bottom pb-3">登&nbsp;&nbsp;录</h3>
+				<h3 class="text-center text-info border-bottom pb-3" th:if="!${showReset}">登&nbsp;&nbsp;录</h3>
+<!--				<h3 class="text-center text-info border-bottom pb-3" th:if="${showReset}">-->
+<!--					&lt;!&ndash; 这里是div的内容，只有当showDiv为true时才会显示 &ndash;&gt;-->
+<!--					修改密码成功，请重新登录！-->
+<!--				</h3>-->
 				<form class="mt-5" method="post" th:action="@{/login}">
 					<div class="form-group row">
 						<label for="username" class="col-sm-2 col-form-label text-right">账号:</label>

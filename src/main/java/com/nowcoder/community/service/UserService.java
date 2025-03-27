@@ -77,7 +77,7 @@ public class UserService implements CommunityConstant {
         // 验证mail
         u = userMapper.selectByEmail(user.getEmail());
         if (u != null) {
-            map.put("mailMsg", "该邮箱已存在");
+            map.put("emailMsg", "该邮箱已存在");
             return map;
         }
 
@@ -173,5 +173,40 @@ public class UserService implements CommunityConstant {
 
     public int updateHeader(int userId, String headerUrl) {
         return userMapper.updateHeader(userId, headerUrl);
+    }
+
+    public Map<String, Object> updatePassword(String ticket, User user, String password, String newPassword) {
+        Map<String, Object> map = new HashMap<>();
+        // 空值处理
+        if (StringUtils.isBlank(password)) {
+            map.put("passwordMsg", "密码不能为空");
+            return map;
+        }
+        if (StringUtils.isBlank(newPassword)) {
+            map.put("newPasswordMsg", "新密码不能为空");
+            return map;
+        }
+
+//        if (newPassword.length() < 8) {
+//            map.put("newPasswordMsg", "密码长度不能小于8位");
+//            return map;
+//        }
+
+        if (newPassword.equals(password)) {
+            map.put("newPasswordMsg", "新密码与原密码一致，请重新设置");
+            return map;
+        }
+        // 验证原密码
+        String pwd_md5 = CommunityUtil.md5(password + user.getSalt());
+        if (!user.getPassword().equals(pwd_md5)) {
+            map.put("passwordMsg", "密码不正确");
+            return map;
+        }
+
+        // 密码重新加密
+        user.setPassword(CommunityUtil.md5(newPassword + user.getSalt()));  // 重新设置密码
+        userMapper.updatePassword(user.getId(), user.getPassword());
+        loginTicketMapper.updateStatus(ticket, 1);  // 相当于登出
+        return map;
     }
 }

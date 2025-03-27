@@ -2,7 +2,7 @@
 <configuration>
     <contextName>community</contextName>
     <property name="LOG_PATH" value="D:/Users/56984/Documents/dev/JAVA"/>
-    <property name="APPDIR" value="community/data"/>
+    <property name="APPDIR" value="nowcoder-dev/data"/>
 
     <!-- error file -->
     <appender name="FILE_ERROR" class="ch.qos.logback.core.rolling.RollingFileAppender">

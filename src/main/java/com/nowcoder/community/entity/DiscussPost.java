@@ -1,5 +1,7 @@
 package com.nowcoder.community.entity;
 
+import java.util.Date;
+
 public class DiscussPost {
     private int id;
     private int userId;
@@ -7,7 +9,7 @@ public class DiscussPost {
     private String content;
     private int type;
     private int status;
-    private String createTime;
+    private Date createTime;
     private int commentCount;
     private double score;
 
@@ -59,11 +61,11 @@ public class DiscussPost {
         this.status = status;
     }
 
-    public String getCreateTime() {
+    public Date getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(String createTime) {
+    public void setCreateTime(Date createTime) {
         this.createTime = createTime;
     }
 

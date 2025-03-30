@@ -44,4 +44,9 @@ public class HomeController {
 //        model,可以省略传page中的数据
         return "/index";
     }
+
+    @RequestMapping(path = "/error", method = RequestMethod.GET)
+    public String getErrorPage() {
+        return "/error/500";
+    }
 }

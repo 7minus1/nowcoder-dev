@@ -209,4 +209,8 @@ public class UserService implements CommunityConstant {
         loginTicketMapper.updateStatus(ticket, 1);  // 相当于登出
         return map;
     }
+
+    public User findUserByName(String username) {
+        return userMapper.selectByName(username);
+    }
 }

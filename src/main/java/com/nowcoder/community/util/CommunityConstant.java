@@ -22,7 +22,7 @@ public interface CommunityConstant {
     * 评论类型
     * */
     int ENTITY_TYPE_POST = 1;
-    int ENTITY_TYPE_COMMENT = 1;
+    int ENTITY_TYPE_COMMENT = 2;
 
 
 

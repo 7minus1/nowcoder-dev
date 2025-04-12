@@ -7,8 +7,8 @@ import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.RedisSerializer;
 
-@EnableCaching
 @Configuration
+@EnableCaching
 public class RedisConfig {
 
     @Bean

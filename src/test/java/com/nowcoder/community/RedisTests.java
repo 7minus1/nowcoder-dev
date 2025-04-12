@@ -1,5 +1,6 @@
 package com.nowcoder.community;
 
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +21,7 @@ import java.util.concurrent.TimeUnit;
 public class RedisTests {
 
     @Autowired
-    private RedisTemplate redisTemplate;
+    private RedisTemplate<String, Object> redisTemplate;
 
     @Test
     public void testStrings() {
@@ -133,5 +134,4 @@ public class RedisTests {
         });
         System.out.println(result);
     }
-
 }
